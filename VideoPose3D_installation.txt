@@ -1,0 +1,153 @@
+# (c) 2021-2022 Christian Hoffmann
+# This non-executable document outlines the installation process of VideoPose3D on Ubuntu with miniconda on Terminal
+# Document version: 2022-10-13
+#
+# Most of this document is a direct copy of Terminal commands and output.
+
+# preconditions:
+# - High-end NVIDIA GPU in order to use torch
+# - Downloaded dataset of Human3.6M, see http://vision.imar.ro/human3.6m/ and https://github.com/facebookresearch/VideoPose3D/blob/main/DATASETS.md#setup-from-original-source-recommended
+# - Current Ubuntu installation (testet on Ubuntu 22.04, Jammy Jellyfish)
+# - ffmpeg installation on Ubuntu
+
+########## 01 - Installing Miniconda ##########
+# derived from https://varhowto.com/install-miniconda-ubuntu-20-04/
+cd ~/Downloads
+wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
+chmod +x Miniconda3-latest-Linux-x86_64.sh
+./Miniconda3-latest-Linux-x86_64.sh
+
+########## 02 - Create Environment ##########
+
+(base) user@machine:~$ conda
+(base) user@machine:~$ conda env list
+...
+(base) user@machine:~$ conda update -n base -c defaults conda
+...
+(base) user@machine:~$ conda create --name videopose3d
+Collecting package metadata (current_repodata.json): done
+Solving environment: done
+## Package Plan ##
+  environment location: /home/user/miniconda3/envs/videopose3d
+Proceed ([y]/n)? 
+Preparing transaction: done
+Verifying transaction: done
+Executing transaction: done
+#
+# To activate this environment, use
+#
+#     $ conda activate videopose3d
+#
+# To deactivate an active environment, use
+#
+#     $ conda deactivate
+
+########## 03 - Prepare Environment (Torch, Detectron2) ##########
+
+(base) user@machine:~$ conda activate videopose3d
+(videopose3d) user@machine:~$ conda install python=3.9
+...
+### Derive the following command from here: https://pytorch.org/
+(videopose3d) user@machine:~$ pip3 install torch torchvision torchaudio
+...
+(videopose3d) user@machine:~$ conda list
+# packages in environment at /home/user/miniconda3/envs/videopose3d:
+#
+# Name                    Version                   Build  Channel
+_libgcc_mutex             0.1                        main  
+_openmp_mutex             4.5                       1_gnu  
+ca-certificates           2021.7.5             h06a4308_1  
+certifi                   2021.5.30        py39h06a4308_0  
+ld_impl_linux-64          2.35.1               h7274673_9  
+libffi                    3.3                  he6710b0_2  
+libgcc-ng                 9.3.0               h5101ec6_17  
+libgomp                   9.3.0               h5101ec6_17  
+libstdcxx-ng              9.3.0               hd4cf53a_17  
+ncurses                   6.2                  he6710b0_1  
+numpy                     1.21.1                   pypi_0    pypi
+opencv-python             4.5.3.56                 pypi_0    pypi
+openssl                   1.1.1k               h27cfd23_0  
+pillow                    8.3.1                    pypi_0    pypi
+pip                       21.1.3           py39h06a4308_0  
+python                    3.9.5                h12debd9_4  
+readline                  8.1                  h27cfd23_0  
+setuptools                52.0.0           py39h06a4308_0  
+sqlite                    3.36.0               hc218d9a_0  
+tk                        8.6.10               hbc83047_0  
+torch                     1.9.0+cu111              pypi_0    pypi
+torchaudio                0.9.0                    pypi_0    pypi
+torchvision               0.10.0+cu111             pypi_0    pypi
+typing-extensions         3.10.0.0                 pypi_0    pypi
+tzdata                    2021a                h52ac0ba_0  
+wheel                     0.36.2             pyhd3eb1b0_0  
+xz                        5.2.5                h7b6447c_0  
+zlib                      1.2.11               h7b6447c_3  
+(videopose3d) user@machine:~$ pip3 install 'git+https://github.com/facebookresearch/detectron2.git'
+...
+(videopose3d) user@machine:~$ conda list
+# packages in environment at /home/user/miniconda3/envs/videopose3d:
+#
+# Name                    Version                   Build  Channel
+...
+detectron2                0.4.1                    pypi_0    pypi
+...
+(videopose3d) user@machine:~$ cd ~/miniconda3/envs/videopose3d
+(videopose3d) user@machine:~/miniconda3/envs/videopose3d$ cd lib/python3.9/site-packages/detectron2
+(videopose3d) user@machine:~/miniconda3/envs/videopose3d/lib/python3.9/site-packages/detectron2$ ls -la
+insgesamt 1284
+drwxrwxr-x  16 user user    4096 Jul 22 16:41 .
+drwxrwxr-x 136 user user    4096 Jul 22 16:45 ..
+-rwxrwxr-x   1 user user 1241464 Jul 22 16:41 _C.cpython-39-x86_64-linux-gnu.so
+drwxrwxr-x   3 user user    4096 Jul 22 16:41 checkpoint
+drwxrwxr-x   3 user user    4096 Jul 22 16:41 config
+drwxrwxr-x   6 user user    4096 Jul 22 16:41 data
+drwxrwxr-x   3 user user    4096 Jul 22 16:41 engine
+drwxrwxr-x   3 user user    4096 Jul 22 16:41 evaluation
+drwxrwxr-x   3 user user    4096 Jul 22 16:41 export
+-rw-rw-r--   1 user user     260 Jul 22 16:41 __init__.py
+drwxrwxr-x   3 user user    4096 Jul 22 16:41 layers
+drwxrwxr-x   7 user user    4096 Jul 22 16:41 modeling
+drwxrwxr-x   4 user user    4096 Jul 22 16:41 model_zoo
+drwxrwxr-x   6 user user    4096 Jul 22 16:41 projects
+drwxrwxr-x   2 user user    4096 Jul 22 16:41 __pycache__
+drwxrwxr-x   3 user user    4096 Jul 22 16:41 solver
+drwxrwxr-x   3 user user    4096 Jul 22 16:41 structures
+drwxrwxr-x   3 user user    4096 Jul 22 16:41 utils
+(videopose3d) user@machine:~/miniconda3/envs/videopose3d/lib/python3.9/site-packages$ cd ~
+(videopose3d) user@machine:~$ mkdir projects
+(videopose3d) user@machine:~$ cd projects/
+(videopose3d) user@machine:~/projects$ mkdir videopose3d
+(videopose3d) user@machine:~/projects$ cd videopose3d/
+(videopose3d) user@machine:~/projects/videopose3d$ git clone https://github.com/facebookresearch/VideoPose3Dgit clone https://github.com/facebookresearch/VideoPose3D
+Cloning to 'VideoPose3D' ...
+remote: Enumerating objects: 121, done.
+remote: Total 121 (delta 0), reused 0 (delta 0), pack-reused 121
+Empfange Objekte: 100% (121/121), 9.53 MiB | 19.21 MiB/s, fertig.
+Löse Unterschiede auf: 100% (41/41), fertig.
+(videopose3d) user@machine:~/projects/videopose3d$ cd ..
+(videopose3d) user@machine:~/projects$ cd videopose3d/VideoPose3D/
+(videopose3d) user@machine:~/projects/videopose3d/VideoPose3D$ python run.py 
+Namespace(dataset='h36m', keypoints='cpn_ft_h36m_dbb', subjects_train='S1,S5,S6,S7,S8', subjects_test='S9,S11', subjects_unlabeled='', actions='*', checkpoint='checkpoint', checkpoint_frequency=10, resume='', evaluate='', render=False, by_subject=False, export_training_curves=False, stride=1, epochs=60, batch_size=1024, dropout=0.25, learning_rate=0.001, lr_decay=0.95, data_augmentation=True, test_time_augmentation=True, architecture='3,3,3', causal=False, channels=1024, subset=1, downsample=1, warmup=1, no_eval=False, dense=False, disable_optimizations=False, linear_projection=False, bone_length_term=True, no_proj=False, viz_subject=None, viz_action=None, viz_camera=0, viz_video=None, viz_skip=0, viz_output=None, viz_export=None, viz_bitrate=3000, viz_no_ground_truth=False, viz_limit=-1, viz_downsample=1, viz_size=5)
+Loading dataset...
+Traceback (most recent call last):
+  File "/home/user/projects/videopose3d/VideoPose3D/run.py", line 41, in <module>
+    dataset = Human36mDataset(dataset_path)
+  File "/home/user/projects/videopose3d/VideoPose3D/common/h36m_dataset.py", line 234, in __init__
+    data = np.load(path, allow_pickle=True)['positions_3d'].item()
+  File "/home/user/miniconda3/envs/videopose3d/lib/python3.9/site-packages/numpy/lib/npyio.py", line 417, in load
+    fid = stack.enter_context(open(os_fspath(file), "rb"))
+FileNotFoundError: [Errno 2] No such file or directory: 'data/data_3d_h36m.npz'
+(videopose3d) user@machine:~/projects/videopose3d/VideoPose3D$ pip install cdflib
+(videopose3d) user@machine:~/projects/videopose3d/VideoPose3D$ cd data/
+(videopose3d) user@machine:~/projects/videopose3d/VideoPose3D/data$ pip install h5py
+## extracted H36M data according to https://github.com/facebookresearch/VideoPose3D/blob/main/DATASETS.md for this example are in "~/documents/h36m_data/extracted"
+(videopose3d) user@machine:~/projects/videopose3d/VideoPose3D$ cd data/
+(videopose3d) user@machine:~/projects/videopose3d/VideoPose3D/data$ python prepare_data_h36m.py --from-source-cdf ~/documents/h36m_data/extracted
+
+## download pretrained models:
+## non-trajectory here: https://github.com/facebookresearch/VideoPose3D/blob/main/INFERENCE.md
+## trajectory here: https://github.com/facebookresearch/VideoPose3D/issues/145#issuecomment-667659254
+## should be named "pretrained_243_h36m_detectron_coco_wtraj.bin" and "pretrained_h36m_detectron_coco.bin"
+## copy pretrained models to folder "~/projects/videopose3d/VideoPose3D/checkpoint"
+
+## You're good to go!

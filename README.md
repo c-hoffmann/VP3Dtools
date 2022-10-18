@@ -1,5 +1,5 @@
 # VP3Dtools
-Scripts and tools for the usage of VideoPose3D
+Scripts and tools for the usage of [VideoPose3D](https://github.com/facebookresearch/VideoPose3D)
 
 # Installation of VideoPose3D
 In order to install VideoPose3D according to the installation instructions [`VideoPose3D installation.txt`](https://github.com/c-hoffmann/VP3Dtools/blob/main/VideoPose3D_installation.txt), a system with Ubuntu Linux as well as a high-end NVIDIA GPU is required

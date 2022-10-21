@@ -118,7 +118,7 @@ drwxrwxr-x   3 user user    4096 Jul 22 16:41 utils
 (videopose3d) user@machine:~$ cd projects/
 (videopose3d) user@machine:~/projects$ mkdir videopose3d
 (videopose3d) user@machine:~/projects$ cd videopose3d/
-(videopose3d) user@machine:~/projects/videopose3d$ git clone https://github.com/facebookresearch/VideoPose3Dgit clone https://github.com/facebookresearch/VideoPose3D
+(videopose3d) user@machine:~/projects/videopose3d$ git clone https://github.com/facebookresearch/VideoPose3D
 Cloning to 'VideoPose3D' ...
 remote: Enumerating objects: 121, done.
 remote: Total 121 (delta 0), reused 0 (delta 0), pack-reused 121

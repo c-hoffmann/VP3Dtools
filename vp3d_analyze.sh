@@ -58,6 +58,9 @@ python infer_video_d2.py --cfg COCO-Keypoints/keypoint_rcnn_R_101_FPN_3x.yaml --
 time_det02=`date +%s`
 
 ###################### 03 - VideoPose3D analysis ######################
+## /!\ Rendering a visualization currently largely depends on how much RAM your machine has available.
+## /!\ Please check https://github.com/facebookresearch/VideoPose3D/issues/235
+## /!\ Until resolved, the commands for visualization below will be disabled. Enable at your own risk!
 
 start_time_vp=`date +%s`
 
@@ -80,9 +83,9 @@ time_vp01a=`date +%s`
 python run.py -d custom -k ${videoname}-left -arc 3,3,3,3,3 -c checkpoint --evaluate pretrained_h36m_detectron_coco.bin --render --viz-subject left.mp4 --viz-action custom --viz-camera 0 --viz-video "${path}/left/left.mp4" --viz-export "${path}/left/vp3d_data/left_noTraj.npy" --viz-size 6
 time_vp02a=`date +%s`
 # visual output
-python run.py -d custom -k ${videoname}-right -arc 3,3,3,3,3 -c checkpoint --evaluate pretrained_h36m_detectron_coco.bin --render --viz-subject right.mp4 --viz-action custom --viz-camera 0 --viz-video "${path}/right/right.mp4" --viz-output "${path}/right/vp3d_visual/right_noTraj.mp4" --viz-size 6
+#python run.py -d custom -k ${videoname}-right -arc 3,3,3,3,3 -c checkpoint --evaluate pretrained_h36m_detectron_coco.bin --render --viz-subject right.mp4 --viz-action custom --viz-camera 0 --viz-video "${path}/right/right.mp4" --viz-output "${path}/right/vp3d_visual/right_noTraj.mp4" --viz-size 6
 time_vp03a=`date +%s`
-python run.py -d custom -k ${videoname}-left -arc 3,3,3,3,3 -c checkpoint --evaluate pretrained_h36m_detectron_coco.bin --render --viz-subject left.mp4 --viz-action custom --viz-camera 0 --viz-video "${path}/left/left.mp4" --viz-output "${path}/left/vp3d_visual/left_noTraj.mp4" --viz-size 6
+#python run.py -d custom -k ${videoname}-left -arc 3,3,3,3,3 -c checkpoint --evaluate pretrained_h36m_detectron_coco.bin --render --viz-subject left.mp4 --viz-action custom --viz-camera 0 --viz-video "${path}/left/left.mp4" --viz-output "${path}/left/vp3d_visual/left_noTraj.mp4" --viz-size 6
 time_vp04a=`date +%s`
 
 
@@ -93,9 +96,9 @@ time_vp01b=`date +%s`
 python run.py -d custom -k ${videoname}-left -arc 3,3,3,3,3 -c checkpoint --evaluate pretrained_243_h36m_detectron_coco_wtraj.bin --render --viz-subject left.mp4 --viz-action custom --viz-camera 0 --viz-video "${path}/left/left.mp4" --viz-export "${path}/left/vp3d_data/left_wTraj.npy" --viz-size 6
 time_vp02b=`date +%s`
 # visual output
-python run.py -d custom -k ${videoname}-right -arc 3,3,3,3,3 -c checkpoint --evaluate pretrained_243_h36m_detectron_coco_wtraj.bin --render --viz-subject right.mp4 --viz-action custom --viz-camera 0 --viz-video "${path}/right/right.mp4" --viz-output "${path}/right/vp3d_visual/right_wTraj.mp4" --viz-size 6
+#python run.py -d custom -k ${videoname}-right -arc 3,3,3,3,3 -c checkpoint --evaluate pretrained_243_h36m_detectron_coco_wtraj.bin --render --viz-subject right.mp4 --viz-action custom --viz-camera 0 --viz-video "${path}/right/right.mp4" --viz-output "${path}/right/vp3d_visual/right_wTraj.mp4" --viz-size 6
 time_vp03b=`date +%s`
-python run.py -d custom -k ${videoname}-left -arc 3,3,3,3,3 -c checkpoint --evaluate pretrained_243_h36m_detectron_coco_wtraj.bin --render --viz-subject left.mp4 --viz-action custom --viz-camera 0 --viz-video "${path}/left/left.mp4" --viz-output "${path}/left/vp3d_visual/left_wTraj.mp4" --viz-size 6
+#python run.py -d custom -k ${videoname}-left -arc 3,3,3,3,3 -c checkpoint --evaluate pretrained_243_h36m_detectron_coco_wtraj.bin --render --viz-subject left.mp4 --viz-action custom --viz-camera 0 --viz-video "${path}/left/left.mp4" --viz-output "${path}/left/vp3d_visual/left_wTraj.mp4" --viz-size 6
 time_vp04b=`date +%s`
 
 ###################### Final runtime statistics ######################
@@ -115,10 +118,10 @@ echo "VideoPose3D analysis (right, without trajectory) done in `expr $time_vp01a
 echo "VideoPose3D analysis (left, without trajectory) done in `expr $time_vp02a - $time_vp01a` seconds."
 echo "VideoPose3D analysis (right, with trajectory) done in `expr $time_vp01b - $time_vp04a` seconds."
 echo "VideoPose3D analysis (left, with trajectory) done in `expr $time_vp02b - $time_vp01b` seconds."
-echo "VideoPose3D video output (right, without trajectory) done in `expr $time_vp03a - $time_vp02a` seconds."
-echo "VideoPose3D video output (left, without trajectory) done in `expr $time_vp04a - $time_vp03a` seconds."
-echo "VideoPose3D video output (right, with trajectory) done in `expr $time_vp03b - $time_vp02b` seconds."
-echo "VideoPose3D video output (left, with trajectory) done in `expr $time_vp04b - $time_vp03b` seconds."
+#echo "VideoPose3D video output (right, without trajectory) done in `expr $time_vp03a - $time_vp02a` seconds."
+#echo "VideoPose3D video output (left, without trajectory) done in `expr $time_vp04a - $time_vp03a` seconds."
+#echo "VideoPose3D video output (right, with trajectory) done in `expr $time_vp03b - $time_vp02b` seconds."
+#echo "VideoPose3D video output (left, with trajectory) done in `expr $time_vp04b - $time_vp03b` seconds."
 echo "Full time used for VideoPose3D analyses: `expr $time_vp02b - $start_time_vp` seconds."
 echo ""
 echo "Full time used to run script: `expr $end_time_full - $start_time_full` seconds."

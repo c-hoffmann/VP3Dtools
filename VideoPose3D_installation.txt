@@ -12,10 +12,13 @@
 
 ########## 01 - Installing Miniconda ##########
 # derived from https://varhowto.com/install-miniconda-ubuntu-20-04/
+# only do this if no other version of miniconda or anaconda is installed.
 cd ~/Downloads
 wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
 chmod +x Miniconda3-latest-Linux-x86_64.sh
 ./Miniconda3-latest-Linux-x86_64.sh
+# if miniconda or anaconda is already installed on your system, just update it:
+conda update conda
 
 ########## 02 - Create Environment ##########
 
